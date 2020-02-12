@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading.Tasks;
 
-namespace StreamRedirectionStarter
+namespace StreamsHandlingStarter
 {
     /// <summary>
     /// Contains functionality for executing PowerShell scripts.
