@@ -47,6 +47,14 @@ namespace StreamsHandlingStarter
             }
         }
 
+        /// <summary>
+        /// Handles data-added events for the information stream.
+        /// </summary>
+        /// <remarks>
+        /// Note: Write-Host and Write-Information messages will end up in the information stream.
+        /// </remarks>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Information_DataAdded(object sender, DataAddedEventArgs e)
         {
             var streamObjectsReceived = sender as PSDataCollection<InformationRecord>;
@@ -55,6 +63,11 @@ namespace StreamsHandlingStarter
             Console.WriteLine($"InfoStreamEvent: {currentStreamRecord.MessageData}");
         }
 
+        /// <summary>
+        /// Handles data-added events for the warning stream.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Warning_DataAdded(object sender, DataAddedEventArgs e)
         {
             var streamObjectsReceived = sender as PSDataCollection<WarningRecord>;
@@ -63,6 +76,15 @@ namespace StreamsHandlingStarter
             Console.WriteLine($"WarningStreamEvent: {currentStreamRecord.Message}");
         }
 
+        /// <summary>
+        /// Handles data-added events for the error stream.
+        /// </summary>
+        /// <remarks>
+        /// Note: Uncaught terminating errors will stop the pipeline completely.
+        /// Non-terminating errors will be written to this stream and execution will continue.
+        /// </remarks>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Error_DataAdded(object sender, DataAddedEventArgs e)
         {
             var streamObjectsReceived = sender as PSDataCollection<ErrorRecord>;
