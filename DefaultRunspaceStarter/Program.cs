@@ -31,6 +31,7 @@ namespace DefaultRunspaceStarter
             var hosted = new HostedRunspace();
             await hosted.RunScript(scriptContents.ToString(), scriptParameters);
 
+            Console.WriteLine("Script execution completed. Press enter key to exit:");
             Console.Read();
         }
     }
