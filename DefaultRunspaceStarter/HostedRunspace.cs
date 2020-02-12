@@ -34,7 +34,7 @@ namespace DefaultRunspaceStarter
                 // print the resulting pipeline objects to the console.
                 foreach (var item in pipelineObjects)
                 {
-                    Console.WriteLine(item.ToString());
+                    Console.WriteLine(item.BaseObject.ToString());
                 }
             }
         }

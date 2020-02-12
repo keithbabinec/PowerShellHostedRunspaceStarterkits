@@ -18,8 +18,8 @@ namespace DefaultRunspaceStarter
             scriptContents.AppendLine("");
             scriptContents.AppendLine("Write-Output \"Here is some cmdlet output:\"");
             scriptContents.AppendLine("Get-Date");
-            scriptContents.AppendLine("Get-Childitem | Select-Object -First 5");
-            scriptContents.AppendLine("Get-Service");
+            scriptContents.AppendLine("Get-Childitem -File | Select-Object -First 3");
+            scriptContents.AppendLine("Get-Service | Select-Object -First 3");
             scriptContents.AppendLine("");
 
             var scriptParameters = new Dictionary<string, object>()
