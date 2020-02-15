@@ -79,15 +79,67 @@ namespace CustomRunspaceStarter
                 // specify the parameters to pass into the script.
                 ps.AddParameters(scriptParameters);
 
+                // subscribe to events from some of the streams
+                ps.Streams.Error.DataAdded += Error_DataAdded;
+                ps.Streams.Warning.DataAdded += Warning_DataAdded;
+                ps.Streams.Information.DataAdded += Information_DataAdded;
+
                 // execute the script and await the result.
                 var pipelineObjects = await ps.InvokeAsync().ConfigureAwait(false);
 
                 // print the resulting pipeline objects to the console.
+                Console.WriteLine("----- Pipeline Output below this point -----");
                 foreach (var item in pipelineObjects)
                 {
                     Console.WriteLine(item.BaseObject.ToString());
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles data-added events for the information stream.
+        /// </summary>
+        /// <remarks>
+        /// Note: Write-Host and Write-Information messages will end up in the information stream.
+        /// </remarks>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Information_DataAdded(object sender, DataAddedEventArgs e)
+        {
+            var streamObjectsReceived = sender as PSDataCollection<InformationRecord>;
+            var currentStreamRecord = streamObjectsReceived[e.Index];
+
+            Console.WriteLine($"InfoStreamEvent: {currentStreamRecord.MessageData}");
+        }
+
+        /// <summary>
+        /// Handles data-added events for the warning stream.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Warning_DataAdded(object sender, DataAddedEventArgs e)
+        {
+            var streamObjectsReceived = sender as PSDataCollection<WarningRecord>;
+            var currentStreamRecord = streamObjectsReceived[e.Index];
+
+            Console.WriteLine($"WarningStreamEvent: {currentStreamRecord.Message}");
+        }
+
+        /// <summary>
+        /// Handles data-added events for the error stream.
+        /// </summary>
+        /// <remarks>
+        /// Note: Uncaught terminating errors will stop the pipeline completely.
+        /// Non-terminating errors will be written to this stream and execution will continue.
+        /// </remarks>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Error_DataAdded(object sender, DataAddedEventArgs e)
+        {
+            var streamObjectsReceived = sender as PSDataCollection<ErrorRecord>;
+            var currentStreamRecord = streamObjectsReceived[e.Index];
+
+            Console.WriteLine($"ErrorStreamEvent: {currentStreamRecord.Exception}");
         }
     }
 }

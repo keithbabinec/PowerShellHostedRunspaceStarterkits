@@ -19,6 +19,17 @@ namespace CustomRunspaceStarter
             scriptContents.AppendLine("Write-Output \"Here are the loaded modules in the script:\"");
             scriptContents.AppendLine("Get-Module");
             scriptContents.AppendLine("");
+            scriptContents.AppendLine("# write some data to the info/warning streams");
+            scriptContents.AppendLine("");
+            scriptContents.AppendLine("Write-Host \"A message from write-host\"");
+            scriptContents.AppendLine("Write-Information \"A message from write-information\"");
+            scriptContents.AppendLine("");
+            scriptContents.AppendLine("Write-Warning \"A message from write-warning\"");
+            scriptContents.AppendLine("");
+            scriptContents.AppendLine("# write a message to the error stream by throwing a non-terminating error");
+            scriptContents.AppendLine("# note: terminating errors will stop the pipeline.");
+            scriptContents.AppendLine("Get-ChildItem -Directory \"folder-doesnt-exist\"");
+            scriptContents.AppendLine("");
 
             var scriptParameters = new Dictionary<string, object>()
             {
