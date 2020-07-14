@@ -28,6 +28,12 @@ namespace SharedAppDomainStarter
                 // specify the parameters to pass into the script.
                 ps.AddParameters(scriptParameters);
 
+                // NOTE: this code sample is similar to the DefaultRunspace example because there isn't any special configuration
+                // required to enable a shared appdomain. The shared appdomain can be leveraged in all runspace use cases.
+                //
+                // The main difference in the code for this project is the script code found in program.cs and the output object handling here
+                // just demonstrates how to use it.
+                
                 // execute the script and await the result.
                 var pipelineObjects = await ps.InvokeAsync().ConfigureAwait(false);
 
